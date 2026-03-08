@@ -1,0 +1,84 @@
+<!-- ===== PAGE: MODELS ===== -->
+<div class="wrap">
+  <div class="two-col">
+
+    <div class="col-left">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="live-dot live-dot--purple" aria-hidden="true"></span>
+            ML Detection Models
+          </div>
+        </div>
+        <div class="model-grid-wrap">
+          <div class="model-grid" id="model-grid" role="radiogroup" aria-label="Select ML detection model">
+
+            <div class="model-card model-card--active" data-model="rf" role="radio" aria-checked="true" tabindex="0" aria-label="Random Forest model, 89.2% accuracy">
+              <div class="model-hd"><span class="check" aria-hidden="true">✓</span>🌲 Random Forest</div>
+              <div class="model-desc">Ensemble of decision trees on AST features</div>
+              <div class="model-acc-bar" aria-hidden="true"><div class="model-acc-fill" style="width:89%;"></div></div>
+              <div class="model-acc-label"><span>Accuracy</span><span class="model-acc-val">89.2%</span></div>
+            </div>
+
+            <div class="model-card" data-model="svm" role="radio" aria-checked="false" tabindex="0" aria-label="SVM model, 84.7% accuracy">
+              <div class="model-hd"><span class="check" aria-hidden="true">✓</span>⚙️ SVM</div>
+              <div class="model-desc">TF-IDF token feature vectors</div>
+              <div class="model-acc-bar" aria-hidden="true"><div class="model-acc-fill" style="width:84%;"></div></div>
+              <div class="model-acc-label"><span>Accuracy</span><span class="model-acc-val">84.7%</span></div>
+            </div>
+
+            <div class="model-card" data-model="bert" role="radio" aria-checked="false" tabindex="0" aria-label="CodeBERT model, 93.1% accuracy">
+              <div class="model-hd"><span class="check" aria-hidden="true">✓</span>🧠 CodeBERT</div>
+              <div class="model-desc">Fine-tuned for AI authorship detection</div>
+              <div class="model-acc-bar" aria-hidden="true"><div class="model-acc-fill" style="width:93%;"></div></div>
+              <div class="model-acc-label"><span>Accuracy</span><span class="model-acc-val">93.1%</span></div>
+            </div>
+
+            <div class="model-card" data-model="gcb" role="radio" aria-checked="false" tabindex="0" aria-label="GraphCodeBERT model, 94.8% accuracy">
+              <div class="model-hd"><span class="check" aria-hidden="true">✓</span>🕸️ GraphCodeBERT</div>
+              <div class="model-desc">Graph structural + semantic embeddings</div>
+              <div class="model-acc-bar" aria-hidden="true"><div class="model-acc-fill" style="width:94%;"></div></div>
+              <div class="model-acc-label"><span>Accuracy</span><span class="model-acc-val">94.8%</span></div>
+            </div>
+
+            <div class="model-card" data-model="sc" role="radio" aria-checked="false" tabindex="0" aria-label="StarCoder model, 91.5% accuracy">
+              <div class="model-hd"><span class="check" aria-hidden="true">✓</span>⭐ StarCoder</div>
+              <div class="model-desc">Token-level embedding analysis</div>
+              <div class="model-acc-bar" aria-hidden="true"><div class="model-acc-fill" style="width:91%;"></div></div>
+              <div class="model-acc-label"><span>Accuracy</span><span class="model-acc-val">91.5%</span></div>
+            </div>
+
+            <div class="model-card" data-model="ensemble" role="radio" aria-checked="false" tabindex="0" aria-label="Ensemble model, 96.3% accuracy, recommended">
+              <div class="model-hd"><span class="check" aria-hidden="true">✓</span>🎯 Ensemble</div>
+              <div class="model-desc">Weighted vote — best accuracy</div>
+              <div class="model-acc-bar" aria-hidden="true"><div class="model-acc-fill" style="width:96%;"></div></div>
+              <div class="model-acc-label"><span>Accuracy</span><span class="model-acc-val">96.3%</span></div>
+            </div>
+
+          </div>
+          <p class="model-note">
+            Selected model weights confidence scoring.
+            <strong>Ensemble</strong> recommended for best results. Models simulated with realistic behavior.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-right">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="live-dot" aria-hidden="true"></span>
+            Active Model
+          </div>
+        </div>
+        <div class="active-model-display" aria-live="polite" aria-label="Currently active model">
+          <div class="active-model-icon" id="m-icon" aria-hidden="true">🌲</div>
+          <div class="active-model-name" id="m-name">Random Forest</div>
+          <div class="active-model-desc" id="m-desc">Ensemble of decision trees</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

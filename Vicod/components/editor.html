@@ -1,0 +1,231 @@
+<!-- ===== PAGE: ANALYZE ===== -->
+<div class="wrap">
+  <div class="two-col">
+
+    <!-- LEFT COLUMN -->
+    <div class="col-left">
+
+      <!-- Code Editor Card -->
+      <div class="card" id="editor-card">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="live-dot" aria-hidden="true"></span>
+            Code Editor
+          </div>
+          <div class="card-head-meta">
+            <span id="lc" class="cursor-info" aria-live="polite" aria-label="Cursor position">Ln 1, Col 1</span>
+            <span id="det-lang" class="pill pill-blue" aria-label="Detected language">AUTO</span>
+          </div>
+        </div>
+
+        <!-- Language Selector -->
+        <div class="lang-bar" role="group" aria-label="Select programming language">
+          <button class="lang-btn active" data-lang="auto"       aria-pressed="true">Auto</button>
+          <button class="lang-btn"        data-lang="python"     aria-pressed="false">Python</button>
+          <button class="lang-btn"        data-lang="javascript" aria-pressed="false">JavaScript</button>
+          <button class="lang-btn"        data-lang="typescript" aria-pressed="false">TypeScript</button>
+          <button class="lang-btn"        data-lang="java"       aria-pressed="false">Java</button>
+          <button class="lang-btn"        data-lang="cpp"        aria-pressed="false">C++</button>
+          <button class="lang-btn"        data-lang="go"         aria-pressed="false">Go</button>
+          <button class="lang-btn"        data-lang="rust"       aria-pressed="false">Rust</button>
+          <button class="lang-btn"        data-lang="php"        aria-pressed="false">PHP</button>
+          <button class="lang-btn"        data-lang="ruby"       aria-pressed="false">Ruby</button>
+          <button class="lang-btn"        data-lang="cs"         aria-pressed="false">C#</button>
+        </div>
+
+        <!-- Editor Body -->
+        <div class="editor-body">
+          <div class="gutter" id="gutter" aria-hidden="true">1</div>
+          <textarea
+            class="code-area"
+            id="editor"
+            placeholder="// Paste your code here or use example buttons below..."
+            aria-label="Code input area"
+            aria-multiline="true"
+            spellcheck="false"
+          ></textarea>
+          <div class="heatmap-overlay" id="hmap" aria-hidden="true"></div>
+          <div class="scan-line" id="scan" aria-hidden="true"></div>
+        </div>
+
+        <!-- Heatmap Legend -->
+        <div class="heatmap-legend" id="hleg" aria-label="Heatmap legend" hidden>
+          <span>Heatmap:</span>
+          <div class="leg-item">
+            <div class="leg-dot leg-dot--ai" aria-hidden="true"></div>
+            AI Pattern
+          </div>
+          <div class="leg-item">
+            <div class="leg-dot leg-dot--human" aria-hidden="true"></div>
+            Human Pattern
+          </div>
+        </div>
+
+        <!-- Editor Footer Actions -->
+        <div class="editor-footer">
+          <button class="btn btn-primary" id="analyzeBtn" aria-label="Analyze the pasted code">
+            ⚡ Analyze Code
+          </button>
+
+          <label class="file-lbl" for="file-upload">
+            📁 Upload File
+            <input
+              type="file"
+              id="file-upload"
+              class="sr-only"
+              accept=".py,.js,.ts,.java,.cpp,.go,.rs,.php,.rb,.cs,.jsx,.tsx,.vue,.swift,.kt"
+              aria-label="Upload a code file"
+            >
+          </label>
+
+          <button class="btn btn-ghost" id="hmap-btn" hidden aria-label="Toggle heatmap overlay">
+            🌡️ Heatmap
+          </button>
+
+          <button class="btn btn-ghost" id="clearBtn" aria-label="Clear the editor">
+            🗑️ Clear
+          </button>
+
+          <button class="btn btn-ghost" id="loadAiExBtn" aria-label="Load AI-generated code example">
+            🤖 AI Example
+          </button>
+
+          <button class="btn btn-ghost" id="loadHumanExBtn" aria-label="Load human-written code example">
+            👤 Human Example
+          </button>
+
+          <span class="line-info" id="linfo" aria-live="polite">0 chars · 0 lines</span>
+        </div>
+
+        <!-- File Upload Error -->
+        <div id="file-error" class="file-error" role="alert" aria-live="assertive" hidden></div>
+
+        <!-- Loading Overlay -->
+        <div class="overlay" id="overlay" aria-live="polite" aria-label="Analysis in progress" hidden>
+          <div class="spinner" aria-hidden="true"></div>
+          <div class="spinner-text" id="spinner-text">Initializing...</div>
+        </div>
+      </div>
+
+      <!-- Claude AI Analysis Card -->
+      <div class="card" id="ai-card" hidden>
+        <div class="card-head">
+          <div class="card-title">
+            <span class="live-dot live-dot--purple" aria-hidden="true"></span>
+            Claude AI Analysis
+          </div>
+          <span class="pill pill-blue">CLAUDE SONNET</span>
+        </div>
+        <div class="ai-analysis-box" aria-live="polite">
+          <div class="ai-analysis-content" id="ai-analysis-content">
+            <em>Waiting for analysis...</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- AST Panel -->
+      <div class="card" id="ast-card" hidden>
+        <div class="card-head">
+          <div class="card-title">
+            <span class="live-dot live-dot--warn" aria-hidden="true"></span>
+            AST Structural Analysis
+          </div>
+          <span class="pill pill-warn" id="ast-lang-badge">PARSED</span>
+        </div>
+        <div class="ast-body">
+          <div class="ast-tree" id="ast-out" role="tree" aria-label="Abstract Syntax Tree"></div>
+        </div>
+      </div>
+
+      <!-- Entropy Panel -->
+      <div class="card" id="ent-card" hidden>
+        <div class="card-head">
+          <div class="card-title">
+            <span class="live-dot live-dot--accent" aria-hidden="true"></span>
+            Shannon Entropy &amp; Code Metrics
+          </div>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="ent-canvas" height="110" aria-label="Entropy chart" role="img"></canvas>
+        </div>
+        <div class="chart-wrap">
+          <canvas id="repo-chart" height="120" aria-label="Repository chart" role="img"></canvas>
+        </div>
+        <div class="metric-grid" id="metric-grid" role="list" aria-label="Code metrics"></div>
+      </div>
+
+    </div><!-- /col-left -->
+
+    <!-- RIGHT SIDEBAR -->
+    <div class="col-right">
+
+      <!-- Verdict Card -->
+      <div class="card" id="verdict-card">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="live-dot" aria-hidden="true"></span>
+            Verdict
+          </div>
+          <span class="pill pill-blue" id="model-badge">IDLE</span>
+        </div>
+        <div class="verdict-box" id="verdict-box" aria-live="polite" aria-label="Analysis verdict">
+          <div class="verdict-glow" aria-hidden="true"></div>
+          <div class="v-label">AI Probability Score</div>
+          <div class="v-score v-score--idle" id="v-score" aria-label="Score">—</div>
+          <div class="v-verdict" id="v-verdict">Awaiting Analysis</div>
+          <div class="v-sub"    id="v-sub">Paste code &amp; click Analyze</div>
+        </div>
+
+        <div class="conf-section">
+          <div class="conf-row">
+            <span class="conf-label">Confidence</span>
+            <span class="conf-val" id="conf-val" aria-live="polite">0%</span>
+          </div>
+          <div class="bar-track" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" aria-label="Confidence bar">
+            <div class="bar-fill" id="conf-bar"></div>
+          </div>
+
+          <div class="split-bar" aria-label="AI vs Human split" role="img">
+            <div class="split-ai"    id="split-ai"></div>
+            <div class="split-human" id="split-human"></div>
+          </div>
+          <div class="split-labels">
+            <span class="split-label--ai"    id="ai-lbl" aria-label="AI percentage">—</span>
+            <span class="split-label--human" id="hu-lbl" aria-label="Human percentage">—</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Detection Signals Card -->
+      <div class="card" id="signals-card">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="live-dot live-dot--warn" aria-hidden="true"></span>
+            Detection Signals
+          </div>
+          <span class="pill pill-warn" id="sig-count" aria-live="polite">0 signals</span>
+        </div>
+        <div class="signals-body" id="signals-body" role="list" aria-label="Detection signals">
+          <div class="empty">
+            <div class="empty-ico" aria-hidden="true">📡</div>
+            <div class="empty-title">No signals yet</div>
+            <div class="empty-sub">Run analysis to detect patterns</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AI Attribution Card -->
+      <div class="card" id="attr-card" hidden>
+        <div class="card-head">
+          <div class="card-title">
+            <span class="live-dot live-dot--ai" aria-hidden="true"></span>
+            AI Source Attribution
+          </div>
+        </div>
+        <div class="attr-body" id="attr-body" aria-live="polite"></div>
+      </div>
+
+    </div><!-- /col-right -->
+
+  </div>
+</div>

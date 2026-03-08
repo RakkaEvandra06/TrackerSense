@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>VibeDetect — AI vs Human Code Analyzer</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+  <!-- Performance Optimization -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&family=Cabinet+Grotesk:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css">
+
+  <!-- SEO -->
+  <meta name="description" content="VibeDetect is an AI vs Human Code Analyzer that helps developers detect coding patterns and understand AI-generated code.">
+  <meta name="keywords" content="AI code detection, code analyzer, AI vs human code, machine learning code analysis, programming tools">
+  <meta name="author" content="VibeDetect Team">
+
+  <!-- Open Graph (Social Media SEO) -->
+  <meta property="og:title" content="VibeDetect — AI vs Human Code Analyzer">
+  <meta property="og:description" content="Analyze and detect whether code is AI-generated or human-written.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="preview.png">
+
+</head>
+
+<body>
+
+  <!-- No JS fallback -->
+  <noscript>
+    <p style="text-align:center;padding:20px;">
+      This application requires JavaScript to run properly.
+    </p>
+  </noscript>
+
+  <!-- Header -->
+  <header id="slot-header"></header>
+
+  <!-- Navigation -->
+  <nav class="nav-tabs z1" role="tablist" aria-label="Main navigation">
+
+    <button 
+      class="nav-tab active"
+      role="tab"
+      aria-selected="true"
+      aria-controls="page-analyze"
+      data-tab="analyze"
+      id="tab-analyze">
+      ⚡ Analyze
+    </button>
+
+    <button 
+      class="nav-tab"
+      role="tab"
+      aria-selected="false"
+      aria-controls="page-github"
+      data-tab="github"
+      id="tab-github">
+      🐙 GitHub Scanner
+    </button>
+
+    <button 
+      class="nav-tab"
+      role="tab"
+      aria-selected="false"
+      aria-controls="page-models"
+      data-tab="models"
+      id="tab-models">
+      🤖 ML Models
+    </button>
+
+    <button 
+      class="nav-tab"
+      role="tab"
+      aria-selected="false"
+      aria-controls="page-dataset"
+      data-tab="dataset"
+      id="tab-dataset">
+      📊 Dataset
+    </button>
+
+    <button 
+      class="nav-tab"
+      role="tab"
+      aria-selected="false"
+      aria-controls="page-about"
+      data-tab="about"
+      id="tab-about">
+      ℹ️ How It Works
+    </button>
+
+  </nav>
+
+  <!-- Main Content -->
+  <main>
+
+    <!-- Analyze Page -->
+    <section 
+      id="page-analyze"
+      class="page active z1"
+      role="tabpanel"
+      aria-labelledby="tab-analyze">
+
+      <div id="slot-analyze"></div>
+
+    </section>
+
+
+    <!-- GitHub Scanner -->
+    <section 
+      id="page-github"
+      class="page z1"
+      role="tabpanel"
+      aria-labelledby="tab-github"
+      hidden>
+
+      <div id="slot-github"></div>
+
+    </section>
+
+
+    <!-- ML Models -->
+    <section 
+      id="page-models"
+      class="page z1"
+      role="tabpanel"
+      aria-labelledby="tab-models"
+      hidden>
+
+      <div id="slot-models"></div>
+
+    </section>
+
+
+    <!-- Dataset -->
+    <section 
+      id="page-dataset"
+      class="page z1"
+      role="tabpanel"
+      aria-labelledby="tab-dataset"
+      hidden>
+
+      <div id="slot-dataset"></div>
+
+    </section>
+
+
+    <!-- About -->
+    <section 
+      id="page-about"
+      class="page z1"
+      role="tabpanel"
+      aria-labelledby="tab-about"
+      hidden>
+
+      <div id="slot-about"></div>
+
+    </section>
+
+  </main>
+
+
+  <!-- Footer -->
+<footer class="site-footer" role="contentinfo">
+
+  <div class="footer-container">
+
+    <!-- Brand -->
+    <div class="footer-brand">
+      <h3 class="footer-logo">VibeDetect</h3>
+      <br>
+      <p class="footer-tagline">
+        AI vs Human Code Analyzer that helps developers understand coding patterns
+        and detect AI-generated code.
+      </p>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <h4 class="footer-title">Navigation</h4>
+      <ul>
+        <li><a href="#" class="footer-link">Home</a></li>
+        <li><a href="#" class="footer-link">Analyze</a></li>
+        <li><a href="#" class="footer-link">GitHub Scanner</a></li>
+        <li><a href="#" class="footer-link">ML Models</a></li>
+        <li><a href="#" class="footer-link">Dataset</a></li>
+        <li><a href="#" class="footer-link">How It Works</a></li>
+      </ul>
+    </nav>
+
+    <!-- Resources -->
+    <div class="footer-resources">
+      <h4 class="footer-title">Resources</h4>
+      <ul>
+        <li><a href="#">Documentation</a></li>
+        <li><a href="#">API</a></li>
+        <li><a href="#">Research Paper</a></li>
+        <li><a href="#">GitHub Repo</a></li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="footer-bottom">
+    <p>© 2026 VibeDetect. All rights reserved.</p>
+  </div>
+
+</footer>
+
+
+  <!-- Scripts -->
+  <script src="js/loader.js" defer></script>
+  <script src="js/patterns.js" defer></script>
+  <script src="js/analysis.js" defer></script>
+  <script src="js/render.js" defer></script>
+  <script src="js/editor.js" defer></script>
+  <script src="js/examples.js" defer></script>
+  <script src="js/github.js" defer></script>
+  <script src="js/app.js" defer></script>
+
+</body>
+
+</html>

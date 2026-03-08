@@ -1,0 +1,89 @@
+<!-- ===== PAGE: GITHUB ===== -->
+<div class="wrap">
+  <div class="two-col">
+
+    <!-- Left: Scanner -->
+    <div class="col-left">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="live-dot live-dot--human" aria-hidden="true"></span>
+            GitHub Repository Scanner
+          </div>
+          <span class="pill pill-green">LIVE SCAN</span>
+        </div>
+
+        <div class="gh-body">
+          <p class="gh-desc">
+            Scan a real GitHub repository and analyze AI-generated code patterns across files.
+          </p>
+
+          <div class="gh-row">
+            <label for="gh-url" class="sr-only">GitHub repository URL</label>
+            <input
+              class="input-field"
+              id="gh-url"
+              type="url"
+              placeholder="https://github.com/user/repo"
+              value="https://github.com/example/sample-project"
+              aria-label="GitHub repository URL"
+            >
+            <button class="btn btn-primary" id="ghScanBtn" aria-label="Start scanning repository">
+              🔍 Scan Repo
+            </button>
+          </div>
+
+          <!-- Scan Results -->
+          <div id="gh-results" aria-live="polite" aria-label="Scan results"></div>
+
+          <!-- Progress Overlay -->
+          <div class="gh-overlay" id="gh-overlay" aria-live="polite" aria-label="Scan in progress" hidden>
+            <div class="spinner" aria-hidden="true"></div>
+            <div class="spinner-text" id="gh-spin-text">Starting scan...</div>
+            <div
+              class="progress-track"
+              role="progressbar"
+              aria-valuenow="0"
+              aria-valuemin="0"
+              aria-valuemax="100"
+              aria-label="Scan progress"
+            >
+              <div id="gh-progress-bar" class="progress-fill"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Repo Stats -->
+    <div class="col-right">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="live-dot" aria-hidden="true"></span>
+            Repo Stats
+          </div>
+        </div>
+        <div class="metric-grid" role="list" aria-label="Repository statistics">
+          <div class="metric" role="listitem">
+            <div class="metric-lbl">Files Scanned</div>
+            <div class="metric-val metric-val--accent" id="gh-files" aria-live="polite">—</div>
+          </div>
+          <div class="metric" role="listitem">
+            <div class="metric-lbl">Avg AI Score</div>
+            <div class="metric-val metric-val--ai" id="gh-avg" aria-live="polite">—</div>
+          </div>
+          <div class="metric" role="listitem">
+            <div class="metric-lbl">AI Files</div>
+            <div class="metric-val metric-val--ai" id="gh-aif" aria-live="polite">—</div>
+          </div>
+          <div class="metric" role="listitem">
+            <div class="metric-lbl">Human Files</div>
+            <div class="metric-val metric-val--human" id="gh-hf" aria-live="polite">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,96 @@
+<!-- ===== PAGE: DATASET ===== -->
+<div class="wrap">
+  <div class="two-col">
+
+    <!-- Left: Examples -->
+    <div class="col-left">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="live-dot live-dot--warn" aria-hidden="true"></span>
+            Training Dataset Examples
+          </div>
+        </div>
+
+        <div class="dataset-body">
+          <!-- Tabs -->
+          <div class="ex-tabs" role="tablist" aria-label="Code example categories">
+            <button class="ex-tab ex-tab--active" role="tab" aria-selected="true"  data-ex-tab="ai"    id="extab-ai"    aria-controls="ex-ai">🤖 AI Code</button>
+            <button class="ex-tab"                role="tab" aria-selected="false" data-ex-tab="human" id="extab-human" aria-controls="ex-human">👤 Human Code</button>
+          </div>
+
+          <!-- AI Examples -->
+          <div id="ex-ai" class="ex-list" role="tabpanel" aria-labelledby="extab-ai">
+            <button class="ex-item" data-example="chatgpt-sort" aria-label="Load ChatGPT Merge Sort example">
+              <div class="ex-name ex-name--ai">ChatGPT — Merge Sort</div>
+              <div class="ex-meta">Python · GPT-4 · Verbose docstring, structured steps</div>
+            </button>
+            <button class="ex-item" data-example="claude-dp" aria-label="Load Claude Dynamic Programming example">
+              <div class="ex-name ex-name--ai">Claude — Dynamic Programming</div>
+              <div class="ex-meta">Python · Claude 3 · Type hints, clean structure</div>
+            </button>
+            <button class="ex-item" data-example="copilot-api" aria-label="Load Copilot REST API Client example">
+              <div class="ex-name ex-name--ai">Copilot — REST API Client</div>
+              <div class="ex-meta">JavaScript · GitHub Copilot · JSDoc, error handling</div>
+            </button>
+            <button class="ex-item" data-example="gemini-ml" aria-label="Load Gemini ML Pipeline example">
+              <div class="ex-name ex-name--ai">Gemini — ML Pipeline</div>
+              <div class="ex-meta">Python · Gemini Pro · Step comments, type annotations</div>
+            </button>
+            <button class="ex-item" data-example="deepseek-graph" aria-label="Load DeepSeek Graph BFS example">
+              <div class="ex-name ex-name--ai">DeepSeek — Graph BFS</div>
+              <div class="ex-meta">Python · DeepSeek · Algorithmic, minimal comments</div>
+            </button>
+          </div>
+
+          <!-- Human Examples -->
+          <div id="ex-human" class="ex-list" role="tabpanel" aria-labelledby="extab-human" hidden>
+            <button class="ex-item" data-example="human-hack" aria-label="Load GitHub OSS File Parser example">
+              <div class="ex-name ex-name--human">GitHub OSS — File Parser</div>
+              <div class="ex-meta">Python · Human · 2am code, TODOs, bare except</div>
+            </button>
+            <button class="ex-item" data-example="human-legacy" aria-label="Load Legacy Codebase C Parser example">
+              <div class="ex-name ex-name--human">Legacy Codebase — C Parser</div>
+              <div class="ex-meta">C · Human · Old style, XXX comments, no-touch zone</div>
+            </button>
+            <button class="ex-item" data-example="human-js" aria-label="Load Weekend Project JS Utility example">
+              <div class="ex-name ex-name--human">Weekend Project — JS Utility</div>
+              <div class="ex-meta">JavaScript · Human · var usage, callbacks, shortcuts</div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: Stats -->
+    <div class="col-right">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="live-dot" aria-hidden="true"></span>
+            Dataset Stats
+          </div>
+        </div>
+        <div class="metric-grid" role="list" aria-label="Dataset statistics">
+          <div class="metric" role="listitem">
+            <div class="metric-lbl">AI Samples</div>
+            <div class="metric-val metric-val--ai">48K</div>
+          </div>
+          <div class="metric" role="listitem">
+            <div class="metric-lbl">Human Samples</div>
+            <div class="metric-val metric-val--human">52K</div>
+          </div>
+          <div class="metric" role="listitem">
+            <div class="metric-lbl">Languages</div>
+            <div class="metric-val metric-val--accent">12</div>
+          </div>
+          <div class="metric" role="listitem">
+            <div class="metric-lbl">AI Sources</div>
+            <div class="metric-val metric-val--warn">8</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
