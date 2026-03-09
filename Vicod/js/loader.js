@@ -1,10 +1,4 @@
-/**
- * loader.js
- * Fetches HTML component partials and injects them into the DOM,
- * then wires up ALL event listeners (no inline handlers in HTML).
- */
-
-// ─── Helpers ──────────────────────────────────────────────────────────────────
+// Helpers ──────────────────────────────────────────────────────────────────
 
 async function loadComponent(slotId, filePath) {
   try {
@@ -19,7 +13,7 @@ async function loadComponent(slotId, filePath) {
   }
 }
 
-// ─── File Upload Validation ───────────────────────────────────────────────────
+// File Upload Validation ───────────────────────────────────────────────────
 
 const ALLOWED_EXTENSIONS = new Set([
   'py','js','ts','java','cpp','go','rs','php','rb','cs',
@@ -46,11 +40,11 @@ function showFileError(msg) {
   el.hidden = !msg;
 }
 
-// ─── Tab Navigation ───────────────────────────────────────────────────────────
+// Tab Navigation ───────────────────────────────────────────────────────────
 
 function initTabs() {
-  const tabs    = document.querySelectorAll('[role="tab"]');
-  const pages   = document.querySelectorAll('.page');
+  const tabs  = document.querySelectorAll('[role="tab"]');
+  const pages = document.querySelectorAll('.page');
 
   tabs.forEach(tab => {
     tab.addEventListener('click', () => {
@@ -78,15 +72,36 @@ function initTabs() {
 
     // Keyboard: arrow keys to move between tabs
     tab.addEventListener('keydown', e => {
-      const all   = [...tabs];
-      const idx   = all.indexOf(tab);
+      const all = [...tabs];
+      const idx = all.indexOf(tab);
       if (e.key === 'ArrowRight') all[(idx + 1) % all.length].focus();
       if (e.key === 'ArrowLeft')  all[(idx - 1 + all.length) % all.length].focus();
     });
   });
 }
 
-// ─── Dataset Tab Switcher ─────────────────────────────────────────────────────
+// Footer Navigation ────────────────────────────────────────────────────────
+
+function initFooterNav() {
+  const footerLinks = document.querySelectorAll('.footer-link[data-tab]');
+
+  footerLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault(); // cegah scroll ke atas akibat href="#"
+
+      const targetTab = link.getAttribute('data-tab');
+
+      // Cari tab button yang sesuai dan klik secara programatik
+      const tabBtn = document.querySelector(`[role="tab"][data-tab="${targetTab}"]`);
+      if (tabBtn) {
+        tabBtn.click();         // trigger tab switching
+        tabBtn.scrollIntoView({ behavior: 'smooth', block: 'start' }); // scroll ke nav
+      }
+    });
+  });
+}
+
+// Dataset Tab Switcher ─────────────────────────────────────────────────────
 
 function initDatasetTabs() {
   const tabs = document.querySelectorAll('[data-ex-tab]');
@@ -106,7 +121,7 @@ function initDatasetTabs() {
   });
 }
 
-// ─── Language Selector ────────────────────────────────────────────────────────
+// Language Selector ────────────────────────────────────────────────────────
 
 function initLangBar() {
   const btns = document.querySelectorAll('.lang-btn');
@@ -118,7 +133,6 @@ function initLangBar() {
       });
       btn.classList.add('active');
       btn.setAttribute('aria-pressed', 'true');
-      // Delegate to existing setLang helper if available
       if (typeof setLang === 'function') {
         setLang(btn.dataset.lang, btn);
       }
@@ -126,7 +140,7 @@ function initLangBar() {
   });
 }
 
-// ─── Model Selector ───────────────────────────────────────────────────────────
+// Model Selector ───────────────────────────────────────────────────────────
 
 function initModelGrid() {
   const cards = document.querySelectorAll('[data-model]');
@@ -147,7 +161,7 @@ function initModelGrid() {
   });
 }
 
-// ─── Editor Buttons ───────────────────────────────────────────────────────────
+// Editor Buttons ───────────────────────────────────────────────────────────
 
 function initEditorButtons() {
   const analyzeBtn   = document.getElementById('analyzeBtn');
@@ -158,30 +172,28 @@ function initEditorButtons() {
   const fileInput    = document.getElementById('file-upload');
   const editorEl     = document.getElementById('editor');
 
-  if (analyzeBtn)   analyzeBtn.addEventListener('click', () => typeof doAnalyze   === 'function' && doAnalyze());
-  if (clearBtn)     clearBtn.addEventListener('click',   () => typeof clearAll    === 'function' && clearAll());
-  if (hmapBtn)      hmapBtn.addEventListener('click',    () => typeof toggleHmap  === 'function' && toggleHmap());
-  if (loadAiBtn)    loadAiBtn.addEventListener('click',  () => typeof loadEx      === 'function' && loadEx('ai'));
-  if (loadHumanBtn) loadHumanBtn.addEventListener('click',() => typeof loadEx     === 'function' && loadEx('human'));
+  if (analyzeBtn)   analyzeBtn.addEventListener('click', () => typeof doAnalyze  === 'function' && doAnalyze());
+  if (clearBtn)     clearBtn.addEventListener('click',   () => typeof clearAll   === 'function' && clearAll());
+  if (hmapBtn)      hmapBtn.addEventListener('click',    () => typeof toggleHmap === 'function' && toggleHmap());
+  if (loadAiBtn)    loadAiBtn.addEventListener('click',  () => typeof loadEx     === 'function' && loadEx('ai'));
+  if (loadHumanBtn) loadHumanBtn.addEventListener('click',() => typeof loadEx    === 'function' && loadEx('human'));
 
-  // Editor input / keyboard events
   if (editorEl) {
-    editorEl.addEventListener('input',   () => typeof onInput    === 'function' && onInput());
-    editorEl.addEventListener('keydown', e  => typeof handleTab  === 'function' && handleTab(e));
-    editorEl.addEventListener('keyup',   () => typeof updateLC   === 'function' && updateLC());
-    editorEl.addEventListener('click',   () => typeof updateLC   === 'function' && updateLC());
+    editorEl.addEventListener('input',   () => typeof onInput   === 'function' && onInput());
+    editorEl.addEventListener('keydown', e  => typeof handleTab === 'function' && handleTab(e));
+    editorEl.addEventListener('keyup',   () => typeof updateLC  === 'function' && updateLC());
+    editorEl.addEventListener('click',   () => typeof updateLC  === 'function' && updateLC());
   }
 
-  // File upload with validation
   if (fileInput) {
     fileInput.addEventListener('change', e => {
-      showFileError(''); // clear previous error
+      showFileError('');
       const file = e.target.files[0];
       if (!file) return;
       const err = validateFile(file);
       if (err) {
         showFileError(err);
-        fileInput.value = ''; // reset
+        fileInput.value = '';
         return;
       }
       if (typeof onFile === 'function') onFile(e);
@@ -189,7 +201,7 @@ function initEditorButtons() {
   }
 }
 
-// ─── GitHub Scanner ───────────────────────────────────────────────────────────
+// GitHub Scanner ───────────────────────────────────────────────────────────
 
 function initGitHub() {
   const scanBtn = document.getElementById('ghScanBtn');
@@ -198,7 +210,7 @@ function initGitHub() {
   }
 }
 
-// ─── Dataset Examples ────────────────────────────────────────────────────────
+// Dataset Examples ────────────────────────────────────────────────────────
 
 function initDatasetExamples() {
   const items = document.querySelectorAll('[data-example]');
@@ -209,7 +221,7 @@ function initDatasetExamples() {
   });
 }
 
-// ─── Bootstrap ───────────────────────────────────────────────────────────────
+// Bootstrap ───────────────────────────────────────────────────────────────
 
 async function bootstrap() {
   await Promise.all([
@@ -219,9 +231,10 @@ async function bootstrap() {
     loadComponent('slot-models',  'components/models.html'),
     loadComponent('slot-dataset', 'components/dataset.html'),
     loadComponent('slot-about',   'components/about.html'),
+    loadComponent('slot-footer',  'components/footer.html'),
   ]);
 
-  // Wire up all interactions after DOM is populated
+  // Wire up semua interaksi setelah DOM terisi
   initTabs();
   initLangBar();
   initModelGrid();
@@ -229,6 +242,7 @@ async function bootstrap() {
   initGitHub();
   initDatasetTabs();
   initDatasetExamples();
+  initFooterNav(); // ← navigasi footer
 }
 
 document.addEventListener('DOMContentLoaded', bootstrap);

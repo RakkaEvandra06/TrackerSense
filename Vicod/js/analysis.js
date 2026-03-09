@@ -1,9 +1,4 @@
-// =====================================================================
-// ANALYSIS ENGINE
-// Language detection, entropy, and core analysis logic
-// =====================================================================
-
-// ===== LANGUAGE DETECTION =====
+// LANGUAGE DETECTION ──────────────────────────────────────────────────────────────────
 function detectLang(code) {
   if (window.currentLang && window.currentLang !== 'auto') return window.currentLang;
   const sigs = {
@@ -26,7 +21,7 @@ function detectLang(code) {
   return best;
 }
 
-// ===== ENTROPY FUNCTIONS =====
+// ENTROPY FUNCTIONS ──────────────────────────────────────────────────────────────────
 function shannonEnt(s) {
   const f = {};
   for (const c of s) f[c] = (f[c] || 0) + 1;
@@ -76,7 +71,7 @@ function idConsistency(code) {
   return 1 - Math.abs(camel - snake) / ids.length;
 }
 
-// ===== CORE ANALYSIS =====
+// CORE ANALYSIS ──────────────────────────────────────────────────────────────────
 function runAnalysis(code) {
   const dl = detectLang(code);
   document.getElementById('det-lang').textContent = dl.toUpperCase();
@@ -156,7 +151,7 @@ function runAnalysis(code) {
   return { dl, aiPct, humPct: 100 - aiPct, conf, signals, attr, ast, metrics: { charEnt, tokEnt, comR, cyc, idC, avgL }, heatRanges };
 }
 
-// ===== AI SOURCE ATTRIBUTION =====
+// AI SOURCE ATTRIBUTION ──────────────────────────────────────────────────────────────────
 function computeAttr(code, aiPct) {
   const s = { ChatGPT: 0, Claude: 0, Copilot: 0, Gemini: 0, DeepSeek: 0, Other: 0 };
   if (aiPct < 30) return s;
@@ -176,7 +171,7 @@ function computeAttr(code, aiPct) {
   return out;
 }
 
-// ===== AST STRUCTURE ANALYSIS =====
+// AST STRUCTURE ANALYSIS ──────────────────────────────────────────────────────────────────
 function computeAST(code, dl) {
   const fns   = (code.match(/\b(def|function|func|fn|public\s+\w+)\s+\w+\s*\(/g) || []).length;
   const cls   = (code.match(/\b(class|interface|struct)\s+\w+/g) || []).length;
