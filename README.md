@@ -4,8 +4,8 @@
 
 <p>
   <img src="https://img.shields.io/badge/version-2.0-4e7bff?style=for-the-badge&logo=semver&logoColor=white"/>
+  <img src="https://img.shields.io/badge/JavaScript-ES6-yellow.svg">
   <img src="https://img.shields.io/badge/license-MIT-2dd67a?style=for-the-badge&logo=opensourceinitiative&logoColor=white"/>
-  <img src="https://img.shields.io/badge/JavaScript-ES6-yellow.svg" alt="JavaScript">
 </p>
 
 <p>
@@ -18,18 +18,17 @@
 
 ---
 
-<p align="center"> <strong>Advanced code analysis tool that detects whether code is AI-generated or human-written using multi-layer detection pipeline</strong> </p>
+<p> <strong>Advanced code analysis tool that detects whether code is AI-generated or human-written using multi-layer detection pipeline</strong> </p>
 
 ---
 
 ## 🏗️ Architecture
 
-```bash
-vicod/                            
+```bash                            
 │
 ├── components/             
 │   ├── header.html
-│   ├── editor.html         
+│   ├── editor.html
 │   ├── github.html
 │   ├── models.html
 │   ├── dataset.html
@@ -40,14 +39,14 @@ vicod/
 │   ├── styles.css
 │
 ├── js/                     
-│    ├── patterns.js         
-│    ├── analysis.js         
-│    ├── render.js           
-│    ├── editor.js           
-│    ├── examples.js         
-│    ├── github.js           
-│    ├── app.js              
-│    └── loader.js    
+│    ├── patterns.js
+│    ├── analysis.js
+│    ├── render.js
+│    ├── editor.js
+│    ├── examples.js
+│    ├── github.js
+│    ├── app.js
+│    └── loader.js
 │
 ├── index.html   
 └── README.md    
@@ -75,8 +74,7 @@ AST structural proxy, counts functions, classes, docstrings, type annotations
 Identifier consistency, camelCase vs snake_case ratio analysis
 
 </td>
-<td width="50%">
-🎨 UI / UX
+<td width="50%">🎨 UI / UX
 
 Live heatmap overlay, highlights AI vs Human patterns inline in the editor
 Typing animation, Claude AI streams its analysis character-by-character
@@ -110,4 +108,17 @@ Clear simulation labels, ML model UI is labeled SIMULATED honestly
 
 ---
 
-<p align="center"> Made with ❤️ by the VibeDetect Team </p><p align="center"> <a href="#">Back to top</a> </p>
+## 📊 Understanding Results
+Verdict Colors
+🔴 Red	70-100%	Likely AI-Generated
+🟢 Green	0-35%	Likely Human-Written
+🟡 Yellow	35-70%	Mixed / Uncertain
+
+Confidence Indicators
+High Confidence (>70%): Multiple strong signals, clear patterns
+Medium Confidence (40-70%): Some signals present, moderate certainty
+Low Confidence (<30%): Few signals, ambiguous patterns
+
+---
+
+<p align="center"> Made with ❤️ by the VibeDetect Team </p><p align="center"> </p>
