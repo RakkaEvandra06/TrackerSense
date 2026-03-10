@@ -1,3 +1,5 @@
+<div align="center">
+
 <img src="https://capsule-render.vercel.app/api?type=waving&color=4e7bff&height=200&section=header&text=VibeDetect&fontSize=72&fontColor=ffffff&fontAlignY=38&desc=AI%20vs%20Human%20Code%20Analyzer&descAlignY=58&descSize=20&animation=fadeIn" width="100%"/>
 
 <p>
@@ -13,7 +15,7 @@
   <img src="https://img.shields.io/badge/Heatmap-✓-4e7bff?style=flat-square"/>
   <img src="https://img.shields.io/badge/GitHub_Scanner-✓-4e7bff?style=flat-square"/>
 </p>
-
+</div>
 ---
 
 <p> <strong>Advanced code analysis tool that detects whether code is AI-generated or human-written using multi-layer detection pipeline</strong> </p>
