@@ -1,89 +1,152 @@
-// =====================================================================
-// EDITOR MODULE
-// Editor helpers: gutter, line/col, file upload, tab handling
-// =====================================================================
-
+// ────────────────────────────────────────────────────────────────
+// EVENT HANDLER MAIN
+// ────────────────────────────────────────────────────────────────
 function onInput() {
   updateGutter();
   updateLC();
   updateInfo();
   if (window.hmapOn) toggleHmap();
 }
-
+// ────────────────────────────────────────────────────────────────
+// UPDATE GUTTER (LINE NUMBERS)
+// ────────────────────────────────────────────────────────────────
 function updateGutter() {
-  const n = document.getElementById('editor').value.split('\n').length;
-  document.getElementById('gutter').innerHTML = Array.from({ length: n }, (_, i) => i + 1).join('<br>');
+  const editor = document.getElementById('editor');
+  const gutter = document.getElementById('gutter');
+  const n = editor.value.split('\n').length;
+
+// ────────────────────────────────────────────────────────────────
+// SAFE FROM XSS
+// ────────────────────────────────────────────────────────────────
+  gutter.textContent = ''; // reset
+  for (let i = 1; i <= n; i++) {
+    const lineEl = document.createElement('div');
+    lineEl.textContent = i;
+    gutter.appendChild(lineEl);
+  }
 }
 
+// ────────────────────────────────────────────────────────────────
+// UPDATE LINE & COLUMN POSITION
+// ────────────────────────────────────────────────────────────────
 function updateLC() {
-  const el = document.getElementById('editor');
-  const v  = el.value.substr(0, el.selectionStart);
-  const ls = v.split('\n');
-  document.getElementById('lc').textContent = `Ln ${ls.length}, Col ${ls[ls.length - 1].length + 1}`;
+  const editor = document.getElementById('editor');
+  const valueBeforeCursor = editor.value.substr(0, editor.selectionStart);
+  const lines = valueBeforeCursor.split('\n');
+  const lineNumber = lines.length;
+  const colNumber = lines[lines.length - 1].length + 1;
+
+  document.getElementById('lc').textContent = `Ln ${lineNumber}, Col ${colNumber}`;
 }
 
+// ────────────────────────────────────────────────────────────────
+// UPDATE INFO TOTAL CHARACTER & LINE COUNT
+// ────────────────────────────────────────────────────────────────
 function updateInfo() {
-  const v = document.getElementById('editor').value;
-  document.getElementById('linfo').textContent = `${v.length} chars · ${v.split('\n').length} lines`;
+  const editor = document.getElementById('editor');
+  const value = editor.value;
+  const lineCount = value.split('\n').length;
+  document.getElementById('linfo').textContent = `${value.length} chars · ${lineCount} lines`;
 }
 
+// ────────────────────────────────────────────────────────────────
+// HANDLER TAB FOR INLINE
+// ────────────────────────────────────────────────────────────────
 function handleTab(e) {
   if (e.key === 'Tab') {
     e.preventDefault();
-    const el = e.target, s = el.selectionStart, en = el.selectionEnd;
-    el.value = el.value.substring(0, s) + '  ' + el.value.substring(en);
-    el.selectionStart = el.selectionEnd = s + 2;
+    const el = e.target;
+    const start = el.selectionStart;
+    const end = el.selectionEnd;
+
+    el.value = el.value.substring(0, start) + '  ' + el.value.substring(end);
+    el.selectionStart = el.selectionEnd = start + 2;
+
     updateGutter();
   }
 }
 
-function setLang(l, el) {
-  window.currentLang = l;
-  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+// ────────────────────────────────────────────────────────────────
+// SET LANGUAGE
+// ────────────────────────────────────────────────────────────────
+function setLang(lang, el) {
+  window.currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
   el.classList.add('active');
 }
 
+// ────────────────────────────────────────────────────────────────
+// HANDLE FILE UPLOAD
+// ────────────────────────────────────────────────────────────────
 function onFile(e) {
-  const f = e.target.files[0];
-  if (!f) return;
-  const r = new FileReader();
-  r.onload = ev => {
-    document.getElementById('editor').value = ev.target.result;
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const allowedExt = ['py','js','ts','java','cpp','go','rs','php','rb','cs','jsx','tsx'];
+  const ext = file.name.split('.').pop().toLowerCase();
+  if (!allowedExt.includes(ext)) {
+    alert('File type not supported!');
+    return;
+  }
+
+  const reader = new FileReader();
+  reader.onload = ev => {
+    const editor = document.getElementById('editor');
+    editor.value = ev.target.result;
+
     updateGutter();
     updateInfo();
-    const ext = f.name.split('.').pop().toLowerCase();
+
+// ────────────────────────────────────────────────────────────────
+// SET LANGUAGE AUTOMATIC IF THERE IS MAPPING
+// ────────────────────────────────────────────────────────────────
     const em = { py: 'python', js: 'javascript', ts: 'typescript', java: 'java', cpp: 'cpp', go: 'go', rs: 'rust', php: 'php', rb: 'ruby', cs: 'cs', jsx: 'javascript', tsx: 'typescript' };
     if (em[ext]) window.currentLang = em[ext];
   };
-  r.readAsText(f);
+  reader.readAsText(file);
 }
 
+// ────────────────────────────────────────────────────────────────
+// OVERLAY
+// ────────────────────────────────────────────────────────────────
 function showOverlay(on) {
   document.getElementById('overlay').className = on ? 'overlay on' : 'overlay';
 }
 
+// ────────────────────────────────────────────────────────────────
+// CLEAR CODE
+// ────────────────────────────────────────────────────────────────
 function clearAll() {
-  document.getElementById('editor').value = '';
-  document.getElementById('hmap').innerHTML = '';
-  document.getElementById('hmap').classList.remove('on');
+  const editor = document.getElementById('editor');
+  editor.value = '';
+
+  const hmap = document.getElementById('hmap');
+  hmap.textContent = '';
+  hmap.classList.remove('on');
+
   document.getElementById('hleg').style.display = 'none';
-  document.getElementById('hmap-btn').style.display = 'none';
   document.getElementById('ast-card').style.display = 'none';
   document.getElementById('ent-card').style.display = 'none';
   document.getElementById('attr-card').style.display = 'none';
   document.getElementById('ai-card').style.display = 'none';
-  document.getElementById('editor').style.opacity = '1';
+
+  editor.style.opacity = '1';
   window.hmapOn = false;
+
   updateGutter();
   updateInfo();
   resetVerdict();
 }
 
-// ===== EDITOR SCROLL SYNC =====
+// ────────────────────────────────────────────────────────────────
+// SYNC SCROLL EDITOR & GUTTER
+// ────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('editor').addEventListener('scroll', function () {
-    document.getElementById('gutter').scrollTop = this.scrollTop;
-    document.getElementById('hmap').scrollTop   = this.scrollTop;
+  const editor = document.getElementById('editor');
+  editor.addEventListener('scroll', () => {
+    document.getElementById('gutter').scrollTop = editor.scrollTop;
+    document.getElementById('hmap').scrollTop   = editor.scrollTop;
   });
+
   updateGutter();
 });
