@@ -16,9 +16,11 @@
   <img src="https://img.shields.io/badge/GitHub_Scanner-✓-4e7bff?style=flat-square"/>
 </p>
 </div>
+
 ---
 
-<p> <strong>Advanced code analysis tool that detects whether code is AI-generated or human-written using multi-layer detection pipeline</strong> </p>
+## VibeCoding Detector - AI vs Human Code Analyzer
+<p align="justify"> <strong>Advanced code analysis tool that detects whether code is AI-generated or human-written using multi-layer detection pipeline</strong> </p>
 
 ---
 
@@ -67,20 +69,24 @@ git clone https://github.com/RakkaEvandra06/TrackerSense.git
 <td width="50%">
 🔍 Core Analysis
 
+<p align="justify">
 Multi-layer pipeline, 5 independent signals fused into one score
 Language-aware patterns, Python, JS, TS, Java, C++, Go, Rust, PHP, Ruby, C#
 Shannon entropy curve, visualized across 30 code segments
 AST structural proxy, counts functions, classes, docstrings, type annotations
 Identifier consistency, camelCase vs snake_case ratio analysis
+</p>
 
 </td>
 <td width="50%">🎨 UI / UX
 
+<p align="justify">
 Live heatmap overlay, highlights AI vs Human patterns inline in the editor
 Typing animation, Claude AI streams its analysis character-by-character
 Scan line visual, animated sweep during analysis
 Confidence bar + split bar, dual visual for AI/Human breakdown
 Dark terminal aesthetic, JetBrains Mono + Syne typography
+</p>
 
 </td>
 </tr>
@@ -88,19 +94,23 @@ Dark terminal aesthetic, JetBrains Mono + Syne typography
 <td width="50%">
 🐙 GitHub Integration
 
+<p align="justify">
 Live repo scanning, fetches real files via GitHub REST API
 Parallel file processing, 5-thread concurrency pool
 Per-file AI scoring, lightweight heuristic optimized for speed
 Language breakdown, auto-detects language from file extension
+</p>
 
 </td>
 <td width="50%">
 🛡️ Accuracy & Honesty
 
+<p align="justify">
 False-positive mitigation, Bayesian smoothing on low-signal inputs
 Code length factor, short snippets get conservative scores
 Deterministic attribution, no random noise in AI source estimates
 Clear simulation labels, ML model UI is labeled SIMULATED honestly
+</p>
 
 </td>
 </tr>
@@ -108,17 +118,4 @@ Clear simulation labels, ML model UI is labeled SIMULATED honestly
 
 ---
 
-## 📊 Understanding Results
-Verdict Colors
-🔴 Red	70-100%	Likely AI-Generated
-🟢 Green	0-35%	Likely Human-Written
-🟡 Yellow	35-70%	Mixed / Uncertain
-
-Confidence Indicators
-High Confidence (>70%): Multiple strong signals, clear patterns
-Medium Confidence (40-70%): Some signals present, moderate certainty
-Low Confidence (<30%): Few signals, ambiguous patterns
-
----
-
-<p align="center"> Made with ❤️ by the VibeDetect Team </p><p align="center"> </p>
+<p align="center"> Made with ❤️ by the VibeDetect Team </p>
