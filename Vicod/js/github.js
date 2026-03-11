@@ -1,87 +1,53 @@
 // =====================================================================
-// GITHUB SCANNER PRO MODULE 3.0 (LIVE REST API)
+// GITHUB SCANNER PRO MODULE 3.2
 // =====================================================================
 
 const GH_PRO = {
-  MAX_FILES: 1000,      // max files per scan (browser-safe)
-  CONCURRENCY: 6,       // parallel fetch pool
+  MAX_FILES: 5000,               // scan lebih banyak file
+  CONCURRENCY: 6,                // parallel fetch pool
   API: "https://api.github.com/repos/",
-  TOKEN: ""             // optional GitHub token
+  TOKEN: "",                     // optional GitHub token
+  MAX_FILE_SIZE: 150 * 1024      // max file size 150 KB
 };
 
 // =====================================================================
-// PARSE REPO URL
+// UTILITY FUNCTIONS
 // =====================================================================
+
+async function fetchWithRetry(url, options = {}, retries = 3) {
+  for (let attempt = 0; attempt < retries; attempt++) {
+    try {
+      const res = await fetch(url, options);
+      if (res.status === 403 && res.headers.get('X-RateLimit-Remaining') === '0') {
+        const reset = res.headers.get('X-RateLimit-Reset');
+        const wait = (reset ? parseInt(reset) * 1000 - Date.now() : 5000) || 5000;
+        await new Promise(r => setTimeout(r, wait));
+      }
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      return res;
+    } catch (err) {
+      if (attempt === retries - 1) throw err;
+      await new Promise(r => setTimeout(r, 1000 * (attempt + 1)));
+    }
+  }
+}
 
 function parseRepoURL(url) {
-  const m = url.match(/github\.com\/([^\/]+)\/([^\/#?]+)/i);
-  if (!m) return null;
-  return { owner: m[1], repo: m[2].replace(".git","") };
+  const match = url.match(/github\.com\/([^\/]+)\/([^\/#?]+)/i);
+  if (!match) return null;
+  return { owner: match[1], repo: match[2].replace(".git", "") };
 }
 
-// =====================================================================
-// FETCH REPO TREE (REST API, recursive)
-// =====================================================================
-
-async function ghFetchTree(owner, repo) {
-  const repoInfo = await fetch(`${GH_PRO.API}${owner}/${repo}`, {
-    headers: GH_PRO.TOKEN ? { Authorization: `token ${GH_PRO.TOKEN}` } : {}
-  }).then(r => r.json());
-
-  const branch = repoInfo.default_branch;
-
-  const url = `${GH_PRO.API}${owner}/${repo}/git/trees/${branch}?recursive=1`;
-  const r = await fetch(url, {
-    headers: GH_PRO.TOKEN ? { Authorization: `token ${GH_PRO.TOKEN}` } : {}
-  });
-
-  const data = await r.json();
-  if (!data.tree) throw new Error("Repo tree fetch failed");
-
-  return data.tree
-    .filter(f => f.type === "blob")
-    .slice(0, GH_PRO.MAX_FILES);
+function ghDetectLanguage(path) {
+  const ext = path.split('.').pop().toLowerCase();
+  const map = {
+    ts: "TypeScript", js: "JavaScript", py: "Python", java: "Java",
+    c: "C", cpp: "C++", cs: "C#", go: "Go", html: "HTML", css: "CSS",
+    php: "PHP", rb: "Ruby", sh: "Shell", json: "JSON", md: "Markdown",
+    yml: "YAML", yaml: "YAML"
+  };
+  return map[ext] || "Other";
 }
-
-// =====================================================================
-// PARALLEL FILE SCANNER
-// =====================================================================
-
-async function ghScanFiles(files, owner, repo, bar, text) {
-  let results = [];
-  let done = 0;
-
-  async function worker(file) {
-    const raw = `https://raw.githubusercontent.com/${owner}/${repo}/HEAD/${file.path}`;
-    try {
-      const content = await fetch(raw).then(r => r.text());
-      const score = ghAIHeuristic(content);
-      const lang = ghDetectLanguage(file.path);
-      results.push({ name: file.path, ai: score, language: lang, size: content.length });
-    } catch(e) {
-      console.warn("Fetch failed:", file.path, e);
-    }
-
-    done++;
-    const pct = Math.floor((done / files.length) * 100);
-    bar.style.width = pct + "%";
-    text.textContent = `Scanning ${done}/${files.length} files`;
-  }
-
-  const pool = [];
-  for (const f of files) {
-    const p = worker(f).then(() => pool.splice(pool.indexOf(p), 1));
-    pool.push(p);
-    if (pool.length >= GH_PRO.CONCURRENCY) await Promise.race(pool);
-  }
-
-  await Promise.all(pool);
-  return results;
-}
-
-// =====================================================================
-// AI HEURISTIC
-// =====================================================================
 
 function ghAIHeuristic(code) {
   let score = 0;
@@ -94,50 +60,89 @@ function ghAIHeuristic(code) {
     /todo:/i,
     /mock data/i
   ];
-  rules.forEach(r => { if(r.test(code)) score += 15; });
+  rules.forEach(r => { if (r.test(code)) score += 12; });
 
-  if (code.match(/function\s+[^{]+{[\s\S]{300,}}/g)) score += 10;
-  if (/(.)\1{8,}/g.test(code)) score += 10;
+  if (/function\s+[^{]+{[\s\S]{300,}}/g.test(code)) score += 8;
+  if (/(.)\1{8,}/g.test(code)) score += 8;
 
   const commentRatio = (code.match(/\/\/|#/g) || []).length / Math.max(code.split("\n").length, 1);
   if (commentRatio > 0.3) score += 10;
-  if (code.match(/(.{20,})\1{2,}/gs)) score += 15;
+
+  if (/([^\n]{20,})\1{2,}/gs.test(code)) score += 10;
   if (code.length > 8000) score += 5;
 
   return Math.min(score, 100);
 }
 
 // =====================================================================
-// LANGUAGE DETECTION (by file extension)
+// GITHUB TREE & FILE FETCHING
 // =====================================================================
 
-function ghDetectLanguage(path) {
-  const ext = path.split('.').pop().toLowerCase();
-  if(["ts"].includes(ext)) return "TypeScript";
-  if(["js"].includes(ext)) return "JavaScript";
-  if(["py"].includes(ext)) return "Python";
-  if(["java"].includes(ext)) return "Java";
-  if(["c"].includes(ext)) return "C";
-  if(["cpp"].includes(ext)) return "C++";
-  if(["cs"].includes(ext)) return "C#";
-  if(["go"].includes(ext)) return "Go";
-  if(["html"].includes(ext)) return "HTML";
-  if(["css"].includes(ext)) return "CSS";
-  if(["php"].includes(ext)) return "PHP";
-  if(["rb"].includes(ext)) return "Ruby";
-  return "Other";
+async function ghFetchTree(owner, repo) {
+  const headers = GH_PRO.TOKEN ? { Authorization: `token ${GH_PRO.TOKEN}` } : {};
+  const repoInfo = await fetchWithRetry(`${GH_PRO.API}${owner}/${repo}`, { headers }).then(r => r.json());
+  if (!repoInfo.default_branch) throw new Error("Cannot determine default branch");
+
+  const treeUrl = `${GH_PRO.API}${owner}/${repo}/git/trees/${repoInfo.default_branch}?recursive=1`;
+  const treeData = await fetchWithRetry(treeUrl, { headers }).then(r => r.json());
+  if (!treeData.tree) throw new Error("Repo tree fetch failed");
+
+  return treeData.tree
+    .filter(f => f.type === "blob")
+    .slice(0, GH_PRO.MAX_FILES);
+}
+
+async function ghFetchFile(file, owner, repo, branch, headers) {
+  if (file.size && file.size > GH_PRO.MAX_FILE_SIZE) return null;
+  const rawUrl = `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/${file.path}`;
+  try {
+    const content = await fetchWithRetry(rawUrl, { headers }).then(r => r.text());
+    return {
+      name: file.path,
+      ai: ghAIHeuristic(content),
+      language: ghDetectLanguage(file.path),
+      size: content.length
+    };
+  } catch (err) {
+    console.warn("Failed fetch file:", file.path, err);
+    return null;
+  }
+}
+
+async function ghScanFiles(files, owner, repo, branch, bar, text) {
+  const results = [];
+  let done = 0;
+  const headers = GH_PRO.TOKEN ? { Authorization: `token ${GH_PRO.TOKEN}` } : {};
+
+  const pool = [];
+  const scanWorker = async (file) => {
+    const res = await ghFetchFile(file, owner, repo, branch, headers);
+    if (res) results.push(res);
+    done++;
+    const pct = Math.floor((done / files.length) * 100);
+    bar.style.width = pct + "%";
+    text.textContent = `Scanning ${done}/${files.length} files`;
+  };
+
+  for (const f of files) {
+    const p = scanWorker(f).finally(() => pool.splice(pool.indexOf(p), 1));
+    pool.push(p);
+    if (pool.length >= GH_PRO.CONCURRENCY) await Promise.race(pool);
+  }
+
+  await Promise.all(pool);
+  return results;
 }
 
 // =====================================================================
-// UPDATE REPO STATS (matches HTML structure)
+// UI UPDATES
 // =====================================================================
 
 function updateRepoStats(files) {
   const totalFiles = files.length;
-  const avgAI = totalFiles > 0 ? Math.round(files.reduce((a, f) => a + f.ai, 0) / totalFiles) : 0;
+  const avgAI = totalFiles ? Math.round(files.reduce((a, f) => a + f.ai, 0) / totalFiles) : 0;
   const aiFiles = files.filter(f => f.ai >= 60).length;
   const humanFiles = files.filter(f => f.ai < 40).length;
-  const mixedFiles = files.filter(f => f.ai >= 40 && f.ai < 60).length;
 
   document.getElementById("gh-files").textContent = totalFiles;
   document.getElementById("gh-avg").textContent = avgAI + "%";
@@ -145,57 +150,51 @@ function updateRepoStats(files) {
   document.getElementById("gh-hf").textContent = humanFiles;
 }
 
-// =====================================================================
-// RENDER RESULTS (AI %, heatmap, language)
-// =====================================================================
-
 function renderGHResults(owner, repo, files) {
-  const avgAI = files.length > 0 ? Math.round(files.reduce((a, f) => a + f.ai, 0) / files.length) : 0;
+  updateRepoStats(files);
+
   const aiFiles = files.filter(f => f.ai >= 60).length;
   const humanFiles = files.filter(f => f.ai < 40).length;
   const mixedFiles = files.filter(f => f.ai >= 40 && f.ai < 60).length;
 
-  // Update repo stats in the metric grid
-  updateRepoStats(files);
-
   const res = document.getElementById("gh-results");
   res.innerHTML = `
-  <div class="repo-card" style="margin-top:20px; border-top:1px solid var(--border); padding-top:20px;">
-    <div class="repo-name" style="font-weight:800; margin-bottom:15px; font-size:16px;">🐙 ${owner}/${repo}</div>
-    <div class="repo-meta" style="display:flex; gap:20px; margin-bottom:15px; font-family:var(--mono); font-size:12px; color:var(--text-muted);">
-      <span>📁 ${files.length} files scanned</span>
-      <!-- Bagian AI average dihapus -->
-      <span>🧠 AI files ${aiFiles}</span>
-      <span>👨‍💻 Human files ${humanFiles}</span>
-      <span>⚖️ Mixed ${mixedFiles}</span>
+    <div class="repo-card" style="margin-top:20px; border-top:1px solid var(--border); padding-top:20px;">
+      <div class="repo-name" style="font-weight:800; margin-bottom:15px; font-size:16px;">🐙 ${owner}/${repo}</div>
+      <div class="repo-meta" style="display:flex; gap:20px; margin-bottom:15px; font-family:var(--mono); font-size:12px; color:var(--text-muted);">
+        <span>📁 ${files.length} files scanned</span>
+        <span>🧠 AI files ${aiFiles}</span>
+        <span>👨‍💻 Human files ${humanFiles}</span>
+        <span>⚖️ Mixed ${mixedFiles}</span>
+      </div>
+      <div class="file-list" style="max-height:400px; overflow-y:auto;">
+        ${files.map(f => {
+          const col = f.ai >= 60 ? "#ff4d4d" : f.ai >= 40 ? "#ffc107" : "#2ecc71";
+          const label = f.ai >= 60 ? "AI" : f.ai >= 40 ? "MIXED" : "Human";
+          return `
+            <div class="file-item" style="display:grid; grid-template-columns:minmax(200px,1fr) 80px 80px 60px 60px; gap:10px; align-items:center; padding:8px 0; border-bottom:1px solid var(--border); font-size:12px;">
+              <span class="file-name" style="font-family:var(--mono); color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${f.name}</span>
+              <span class="file-lang" style="color:var(--text-muted);">${f.language}</span>
+              <div class="file-bar-wrap" style="background:var(--surface); height:16px; border-radius:8px; overflow:hidden; width:80px;">
+                <div class="file-bar" style="height:100%; width:${f.ai}%; background:${col};"></div>
+              </div>
+              <span class="file-pct" style="font-family:var(--mono);">${f.ai}%</span>
+              <span class="file-badge" style="font-size:9px; padding:2px 6px; border-radius:20px; background:${col}20; color:${col};">${label}</span>
+            </div>`;
+        }).join("")}
+      </div>
     </div>
-    <div class="file-list" style="max-height:400px; overflow-y:auto;">
-      ${files.map(f => {
-        const col = f.ai >= 60 ? "#ff4d4d" : f.ai >= 40 ? "#ffc107" : "#2ecc71";
-        const label = f.ai >= 60 ? "AI" : f.ai >= 40 ? "MIXED" : "Human";
-        return `
-        <div class="file-item" style="display:grid; grid-template-columns:minmax(200px,1fr) 80px 80px 60px 60px; gap:10px; align-items:center; padding:8px 0; border-bottom:1px solid var(--border); font-size:12px;">
-          <span class="file-name" style="font-family:var(--mono); color:var(--text); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${f.name}</span>
-          <span class="file-lang" style="color:var(--text-muted);">${f.language}</span>
-          <div class="file-bar-wrap" style="background:var(--surface); height:16px; border-radius:8px; overflow:hidden; width:80px;">
-            <div class="file-bar" style="height:100%; width:${f.ai}%; background:${col};"></div>
-          </div>
-          <span class="file-pct" style="font-family:var(--mono);">${f.ai}%</span>
-          <span class="file-badge" style="font-size:9px; padding:2px 6px; border-radius:20px; background:${col}20; color:${col};">${label}</span>
-        </div>`;
-      }).join("")}
-    </div>
-  </div>`;
+  `;
 }
 
 // =====================================================================
-// MAIN SCAN ENTRY
+// MAIN ENTRY POINT
 // =====================================================================
 
 async function ghScanReal() {
   const url = document.getElementById("gh-url").value.trim();
   const parsed = parseRepoURL(url);
-  if (!parsed) { alert("Invalid GitHub repo URL"); return; }
+  if (!parsed) return alert("Invalid GitHub repo URL");
 
   const { owner, repo } = parsed;
   const overlay = document.getElementById("gh-overlay");
@@ -207,25 +206,30 @@ async function ghScanReal() {
   text.textContent = "Fetching repo files...";
 
   try {
+    const headers = GH_PRO.TOKEN ? { Authorization: `token ${GH_PRO.TOKEN}` } : {};
+    const repoInfo = await fetchWithRetry(`${GH_PRO.API}${owner}/${repo}`, { headers }).then(r => r.json());
+    const branch = repoInfo.default_branch || 'main';
+
     const files = await ghFetchTree(owner, repo);
     text.textContent = `Found ${files.length} files`;
-    const results = await ghScanFiles(files, owner, repo, bar, text);
+
+    const results = await ghScanFiles(files, owner, repo, branch, bar, text);
     overlay.style.display = "none";
+
     renderGHResults(owner, repo, results);
-  } catch (e) {
+  } catch (err) {
     overlay.style.display = "none";
-    alert("Scan error: " + e.message);
+    alert("Scan error: " + err.message);
+    console.error("Scan failed:", err);
   }
 }
 
 // =====================================================================
-// INITIALIZE DEFAULT VALUES
+// INITIALIZE PLACEHOLDER VALUES
 // =====================================================================
 
-// Set initial placeholder values
-document.addEventListener('DOMContentLoaded', function() {
-  document.getElementById("gh-files").textContent = "—";
-  document.getElementById("gh-avg").textContent = "—";
-  document.getElementById("gh-aif").textContent = "—";
-  document.getElementById("gh-hf").textContent = "—";
+document.addEventListener('DOMContentLoaded', () => {
+  ["gh-files", "gh-avg", "gh-aif", "gh-hf"].forEach(id => {
+    document.getElementById(id).textContent = "—";
+  });
 });
