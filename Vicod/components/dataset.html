@@ -1,91 +1,199 @@
 <!-- ===== PAGE: DATASET ===== -->
-<div class="wrap">
+<section class="wrap">
+
   <div class="two-col">
 
-    <!-- Left: Examples -->
-    <div class="col-left">
-      <div class="card">
-        <div class="card-head">
-          <div class="card-title">
+    <!-- ================= LEFT : DATASET EXAMPLES ================= -->
+    <section class="col-left">
+
+      <article class="card">
+
+        <header class="card-head">
+          <h2 class="card-title">
             <span class="live-dot live-dot--warn" aria-hidden="true"></span>
             Training Dataset Examples
-          </div>
-        </div>
+          </h2>
+        </header>
 
         <div class="dataset-body">
 
-          <!-- AI Examples -->
-          <div id="ex-ai" class="ex-list" role="tabpanel" aria-labelledby="extab-ai">
-            <button class="ex-item" data-example="chatgpt-sort" aria-label="Load ChatGPT Merge Sort example">
-              <div class="ex-name ex-name--ai">ChatGPT — Merge Sort</div>
-              <div class="ex-meta">Python · GPT-4 · Verbose docstring, structured steps</div>
-            </button>
-            <button class="ex-item" data-example="claude-dp" aria-label="Load Claude Dynamic Programming example">
-              <div class="ex-name ex-name--ai">Claude — Dynamic Programming</div>
-              <div class="ex-meta">Python · Claude 3 · Type hints, clean structure</div>
-            </button>
-            <button class="ex-item" data-example="copilot-api" aria-label="Load Copilot REST API Client example">
-              <div class="ex-name ex-name--ai">Copilot — REST API Client</div>
-              <div class="ex-meta">JavaScript · GitHub Copilot · JSDoc, error handling</div>
-            </button>
-            <button class="ex-item" data-example="gemini-ml" aria-label="Load Gemini ML Pipeline example">
-              <div class="ex-name ex-name--ai">Gemini — ML Pipeline</div>
-              <div class="ex-meta">Python · Gemini Pro · Step comments, type annotations</div>
-            </button>
-            <button class="ex-item" data-example="deepseek-graph" aria-label="Load DeepSeek Graph BFS example">
-              <div class="ex-name ex-name--ai">DeepSeek — Graph BFS</div>
-              <div class="ex-meta">Python · DeepSeek · Algorithmic, minimal comments</div>
-            </button>
-          </div>
+          <!-- ================= AI EXAMPLES ================= -->
+          <section
+            id="ex-ai"
+            class="ex-list"
+            role="tabpanel"
+            aria-labelledby="extab-ai"
+          >
 
-          <!-- Human Examples -->
-          <div id="ex-human" class="ex-list" role="tabpanel" aria-labelledby="extab-human" hidden>
-            <button class="ex-item" data-example="human-hack" aria-label="Load GitHub OSS File Parser example">
-              <div class="ex-name ex-name--human">GitHub OSS — File Parser</div>
-              <div class="ex-meta">Python · Human · 2am code, TODOs, bare except</div>
+            <button
+              class="ex-item"
+              data-example="chatgpt-sort"
+              aria-label="Load ChatGPT Merge Sort example"
+            >
+              <span class="ex-name ex-name--ai">
+                ChatGPT — Merge Sort
+              </span>
+              <span class="ex-meta">
+                Python · GPT-4 · Verbose docstring, structured steps
+              </span>
             </button>
-            <button class="ex-item" data-example="human-legacy" aria-label="Load Legacy Codebase C Parser example">
-              <div class="ex-name ex-name--human">Legacy Codebase — C Parser</div>
-              <div class="ex-meta">C · Human · Old style, XXX comments, no-touch zone</div>
+
+            <button
+              class="ex-item"
+              data-example="claude-dp"
+              aria-label="Load Claude Dynamic Programming example"
+            >
+              <span class="ex-name ex-name--ai">
+                Claude — Dynamic Programming
+              </span>
+              <span class="ex-meta">
+                Python · Claude 3 · Type hints, clean structure
+              </span>
             </button>
-            <button class="ex-item" data-example="human-js" aria-label="Load Weekend Project JS Utility example">
-              <div class="ex-name ex-name--human">Weekend Project — JS Utility</div>
-              <div class="ex-meta">JavaScript · Human · var usage, callbacks, shortcuts</div>
+
+            <button
+              class="ex-item"
+              data-example="copilot-api"
+              aria-label="Load Copilot REST API Client example"
+            >
+              <span class="ex-name ex-name--ai">
+                Copilot — REST API Client
+              </span>
+              <span class="ex-meta">
+                JavaScript · GitHub Copilot · JSDoc, error handling
+              </span>
             </button>
-          </div>
+
+            <button
+              class="ex-item"
+              data-example="gemini-ml"
+              aria-label="Load Gemini ML Pipeline example"
+            >
+              <span class="ex-name ex-name--ai">
+                Gemini — ML Pipeline
+              </span>
+              <span class="ex-meta">
+                Python · Gemini Pro · Step comments, type annotations
+              </span>
+            </button>
+
+            <button
+              class="ex-item"
+              data-example="deepseek-graph"
+              aria-label="Load DeepSeek Graph BFS example"
+            >
+              <span class="ex-name ex-name--ai">
+                DeepSeek — Graph BFS
+              </span>
+              <span class="ex-meta">
+                Python · DeepSeek · Algorithmic, minimal comments
+              </span>
+            </button>
+
+          </section>
+
+
+          <!-- ================= HUMAN EXAMPLES ================= -->
+          <section
+            id="ex-human"
+            class="ex-list"
+            role="tabpanel"
+            aria-labelledby="extab-human"
+            hidden
+          >
+
+            <button
+              class="ex-item"
+              data-example="human-hack"
+              aria-label="Load GitHub OSS File Parser example"
+            >
+              <span class="ex-name ex-name--human">
+                GitHub OSS — File Parser
+              </span>
+              <span class="ex-meta">
+                Python · Human · 2am code, TODOs, bare except
+              </span>
+            </button>
+
+            <button
+              class="ex-item"
+              data-example="human-legacy"
+              aria-label="Load Legacy Codebase C Parser example"
+            >
+              <span class="ex-name ex-name--human">
+                Legacy Codebase — C Parser
+              </span>
+              <span class="ex-meta">
+                C · Human · Old style, XXX comments, no-touch zone
+              </span>
+            </button>
+
+            <button
+              class="ex-item"
+              data-example="human-js"
+              aria-label="Load Weekend Project JS Utility example"
+            >
+              <span class="ex-name ex-name--human">
+                Weekend Project — JS Utility
+              </span>
+              <span class="ex-meta">
+                JavaScript · Human · var usage, callbacks, shortcuts
+              </span>
+            </button>
+
+          </section>
+
         </div>
-      </div>
-    </div>
 
-    <!-- Right: Stats -->
-    <div class="col-right">
-      <div class="card">
-        <div class="card-head">
-          <div class="card-title">
+      </article>
+
+    </section>
+
+
+    <!-- ================= RIGHT : DATASET STATS ================= -->
+    <aside class="col-right">
+
+      <article class="card">
+
+        <header class="card-head">
+          <h2 class="card-title">
             <span class="live-dot" aria-hidden="true"></span>
             Dataset Stats
+          </h2>
+        </header>
+
+        <div
+          class="metric-grid"
+          role="list"
+          aria-label="Dataset statistics"
+        >
+
+          <div class="metric" role="listitem">
+            <span class="metric-lbl">AI Samples</span>
+            <strong class="metric-val metric-val--ai">48K</strong>
           </div>
+
+          <div class="metric" role="listitem">
+            <span class="metric-lbl">Human Samples</span>
+            <strong class="metric-val metric-val--human">52K</strong>
+          </div>
+
+          <div class="metric" role="listitem">
+            <span class="metric-lbl">Languages</span>
+            <strong class="metric-val metric-val--accent">12</strong>
+          </div>
+
+          <div class="metric" role="listitem">
+            <span class="metric-lbl">AI Sources</span>
+            <strong class="metric-val metric-val--warn">8</strong>
+          </div>
+
         </div>
-        <div class="metric-grid" role="list" aria-label="Dataset statistics">
-          <div class="metric" role="listitem">
-            <div class="metric-lbl">AI Samples</div>
-            <div class="metric-val metric-val--ai">48K</div>
-          </div>
-          <div class="metric" role="listitem">
-            <div class="metric-lbl">Human Samples</div>
-            <div class="metric-val metric-val--human">52K</div>
-          </div>
-          <div class="metric" role="listitem">
-            <div class="metric-lbl">Languages</div>
-            <div class="metric-val metric-val--accent">12</div>
-          </div>
-          <div class="metric" role="listitem">
-            <div class="metric-lbl">AI Sources</div>
-            <div class="metric-val metric-val--warn">8</div>
-          </div>
-        </div>
-      </div>
-    </div>
+
+      </article>
+
+    </aside>
 
   </div>
-</div>
+
+</section>
