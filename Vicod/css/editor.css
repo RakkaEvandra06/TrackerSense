@@ -1,0 +1,173 @@
+/* ── Language Bar ───────────────────────────────────────────── */
+.lang-bar {
+  display: flex;
+  gap: 4px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+  overflow-x: auto;
+}
+ 
+.lang-btn {
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: none;
+  border: 1px solid var(--border2);
+  color: var(--text-muted);
+  font-family: var(--mono);
+  font-size: 10px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.lang-btn.active              { background: var(--accent-dim); border-color: var(--accent); color: var(--accent); }
+.lang-btn:hover:not(.active)  { color: var(--text); border-color: var(--border2); background: var(--surface3); }
+ 
+/* ── Editor Body ────────────────────────────────────────────── */
+.editor-body {
+  display: flex;
+  position: relative;
+  min-height: 360px;
+}
+ 
+/* ── Gutter ─────────────────────────────────────────────────── */
+.gutter {
+  padding: 16px 10px 16px 14px;
+  background: var(--surface2);
+  border-right: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.75;
+  color: var(--text-dim);
+  text-align: right;
+  user-select: none;
+  min-width: 46px;
+}
+ 
+/* ── Code Area ──────────────────────────────────────────────── */
+.code-area {
+  flex: 1;
+  padding: 16px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.75;
+  resize: none;
+  tab-size: 2;
+  min-height: 360px;
+  width: 100%;
+}
+ 
+/* ── Editor Footer ──────────────────────────────────────────── */
+.editor-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--surface2);
+  align-items: center;
+}
+ 
+.line-info {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-dim);
+}
+ 
+/* ── Loading Overlay ────────────────────────────────────────── */
+.overlay {
+  display: none;
+  position: absolute;
+  inset: 0;
+  background: rgba(5, 7, 13, 0.88);
+  backdrop-filter: blur(6px);
+  z-index: 20;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 14px;
+  border-radius: 14px;
+}
+.overlay.on { display: flex; }
+ 
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+ 
+.spinner-text {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text-muted);
+  animation: fade-text 1s ease-in-out infinite;
+}
+@keyframes fade-text {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+ 
+/* ── Heatmap Overlay ────────────────────────────────────────── */
+.heatmap-overlay {
+  position: absolute;
+  top: 0; left: 46px; right: 0; bottom: 0;
+  pointer-events: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.75;
+  padding: 16px;
+  white-space: pre-wrap;
+  word-break: break-all;
+  overflow: hidden;
+  display: none;
+}
+.heatmap-overlay.on { display: block; }
+ 
+.h-ai    { background: rgba(255, 71, 87, 0.18);  border-radius: 2px; }
+.h-human { background: rgba(46, 213, 115, 0.14); border-radius: 2px; }
+ 
+/* ── Heatmap Legend ─────────────────────────────────────────── */
+.heatmap-legend {
+  display: flex;
+  gap: 14px;
+  padding: 7px 14px;
+  border-top: 1px solid var(--border);
+  background: var(--surface2);
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  align-items: center;
+}
+ 
+.leg-item { display: flex; align-items: center; gap: 5px; }
+.leg-dot  { width: 8px; height: 8px; border-radius: 2px; }
+ 
+.leg-dot--ai    { background: rgba(255, 71, 87, 0.4); }
+.leg-dot--human { background: rgba(46, 213, 115, 0.3); }
+ 
+/* ── Scan Line ──────────────────────────────────────────────── */
+.scan-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), transparent);
+  top: 0;
+  pointer-events: none;
+  z-index: 5;
+  display: none;
+}
+.scan-line.on { display: block; animation: scan-dn 1.8s ease-in-out forwards; }
+@keyframes scan-dn {
+  from { top: 0;    opacity: 1; }
+  to   { top: 100%; opacity: 0; }
+}
+ 
