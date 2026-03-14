@@ -1,36 +1,93 @@
-<!-- HTML -->
-<div class="wrap">
-  <div class="about-grid">
+<section class="about">
+  <div class="wrap">
 
-    <article class="about-card">
-      <h2 class="about-h about-h--warn">⚡ Multi-Layer Analysis Pipeline</h2>
-      <p class="about-p">VibeDetect combines 5 distinct analysis layers: AST structural parsing, Shannon entropy calculation, pattern engine (regex + language-aware), statistical metrics, and ML model ensemble scoring. Each layer contributes weighted signals to the final verdict. Now powered by Claude AI for deeper semantic analysis.</p>
-    </article>
+    <header class="about-header">
+      <h1 class="about-title">How VibeDetect Works</h1>
+    </header>
 
-    <article class="about-card">
-      <h2 class="about-h about-h--ai">🤖 AI Pattern Recognition</h2>
-      <p class="about-p">AI-generated code exhibits: perfect docstrings on all functions, overly descriptive variable names, consistent indentation uniformity, zero TODO/FIXME comments, symmetric error handling, comprehensive type annotations, and predictable structure. These are flagged as AI signals.</p>
-    </article>
+    <div class="about-grid">
 
-    <article class="about-card">
-      <h2 class="about-h about-h--human">👤 Human Pattern Recognition</h2>
-      <p class="about-p">Human code shows: TODO/FIXME/HACK comments, abbreviations, inconsistent style, commented-out dead code, debugging artifacts, non-standard variable names, missing error handling in some places but detailed in others, and personal shortcuts.</p>
-    </article>
+      <article class="about-card" aria-labelledby="analysis-pipeline">
+        <h3 id="analysis-pipeline" class="about-h about-h--warn">
+          <span class="about-icon" aria-hidden="true">⚡</span>
+          Multi-Layer Analysis Pipeline
+        </h3>
+        <p class="about-p">
+          VibeDetect combines 5 distinct analysis layers: AST structural parsing,
+          Shannon entropy calculation, pattern engine (regex + language-aware),
+          statistical metrics, and ML model ensemble scoring. Each layer contributes
+          weighted signals to the final verdict. Now powered by Claude AI for deeper
+          semantic analysis.
+        </p>
+      </article>
 
-    <article class="about-card">
-      <h2 class="about-h about-h--accent">📊 Entropy Analysis</h2>
-      <p class="about-p">Shannon entropy measures lexical diversity. AI code tends toward moderate-high entropy (predictable but varied vocabulary), while human code shows more extreme variance. Burstiness and token distribution are measured across 30 code segments to plot the entropy curve.</p>
-    </article>
+      <article class="about-card" aria-labelledby="ai-pattern">
+        <h3 id="ai-pattern" class="about-h about-h--ai">
+          <span class="about-icon" aria-hidden="true">🤖</span>
+          AI Pattern Recognition
+        </h3>
+        <p class="about-p">
+          AI-generated code exhibits: perfect docstrings on all functions,
+          overly descriptive variable names, consistent indentation uniformity,
+          zero TODO/FIXME comments, symmetric error handling, comprehensive type
+          annotations, and predictable structure. These are flagged as AI signals.
+        </p>
+      </article>
 
-    <article class="about-card">
-      <h2 class="about-h about-h--purple">🧠 Claude AI Integration</h2>
-      <p class="about-p">Claude Sonnet performs deep semantic analysis: understanding code intent, naming patterns, comment quality, architectural decisions, and overall writing style. This adds a qualitative layer that pure statistical methods miss, significantly boosting detection accuracy.</p>
-    </article>
+      <article class="about-card" aria-labelledby="human-pattern">
+        <h3 id="human-pattern" class="about-h about-h--human">
+          <span class="about-icon" aria-hidden="true">👤</span>
+          Human Pattern Recognition
+        </h3>
+        <p class="about-p">
+          Human code shows: TODO/FIXME/HACK comments, abbreviations,
+          inconsistent style, commented-out dead code, debugging artifacts,
+          non-standard variable names, missing error handling in some places
+          but detailed in others, and personal shortcuts.
+        </p>
+      </article>
 
-    <article class="about-card">
-      <h2 class="about-h">🛡️ False Positive Mitigation</h2>
-      <p class="about-p">Language-aware analysis prevents cross-language false positives. Score normalization ensures consistent confidence ranges. Bayesian smoothing prevents overconfidence with few signals. Pattern overlap detection prevents double-counting. Minimum signal threshold required.</p>
-    </article>
+      <article class="about-card" aria-labelledby="entropy-analysis">
+        <h3 id="entropy-analysis" class="about-h about-h--accent">
+          <span class="about-icon" aria-hidden="true">📊</span>
+          Entropy Analysis
+        </h3>
+        <p class="about-p">
+          Shannon entropy measures lexical diversity. AI code tends toward
+          moderate-high entropy (predictable but varied vocabulary), while
+          human code shows more extreme variance. Burstiness and token
+          distribution are measured across 30 code segments to plot the
+          entropy curve.
+        </p>
+      </article>
 
+      <article class="about-card" aria-labelledby="claude-integration">
+        <h3 id="claude-integration" class="about-h about-h--purple">
+          <span class="about-icon" aria-hidden="true">🧠</span>
+          Claude AI Integration
+        </h3>
+        <p class="about-p">
+          Claude Sonnet performs deep semantic analysis: understanding code
+          intent, naming patterns, comment quality, architectural decisions,
+          and overall writing style. This adds a qualitative layer that pure
+          statistical methods miss, significantly boosting detection accuracy.
+        </p>
+      </article>
+
+      <article class="about-card" aria-labelledby="false-positive">
+        <h3 id="false-positive" class="about-h">
+          <span class="about-icon" aria-hidden="true">🛡️</span>
+          False Positive Mitigation
+        </h3>
+        <p class="about-p">
+          Language-aware analysis prevents cross-language false positives.
+          Score normalization ensures consistent confidence ranges.
+          Bayesian smoothing prevents overconfidence with few signals.
+          Pattern overlap detection prevents double-counting.
+          Minimum signal threshold required.
+        </p>
+      </article>
+
+    </div>
   </div>
-</div>
+</section>
