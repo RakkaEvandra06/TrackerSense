@@ -1,0 +1,94 @@
+/* ── Header ─────────────────────────────────────────────────── */
+header {
+  padding: 0 32px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+  background: rgba(5, 7, 13, 0.8);
+  backdrop-filter: blur(20px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+ 
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border);
+}
+ 
+/* ── Logo ───────────────────────────────────────────────────── */
+.logo-wrap { display: flex; align-items: center; gap: 14px; }
+ 
+.logo-mark {
+  width: 34px;
+  height: 34px;
+  background: linear-gradient(135deg, var(--accent), #a78bfa);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+ 
+.logo-name {
+  font-family: var(--mono);
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+.logo-name em { color: var(--accent); font-style: normal; }
+ 
+.logo-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-top: 1px;
+}
+ 
+/* ── Header Right ───────────────────────────────────────────── */
+.header-right  { display: flex; align-items: center; gap: 8px; }
+ 
+.header-badges {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+ 
+/* ── Nav Tabs ───────────────────────────────────────────────── */
+.nav-tabs {
+  display: flex;
+  gap: 2px;
+  padding: 0 32px;
+  border-bottom: 1px solid var(--border);
+  background: rgba(10, 13, 21, 0.6);
+  backdrop-filter: blur(10px);
+  overflow-x: auto;
+}
+ 
+.nav-tab {
+  padding: 12px 16px;
+  background: none;
+  border: none;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  white-space: nowrap;
+  letter-spacing: 0.3px;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.15s, border-color 0.15s;
+}
+.nav-tab:hover        { color: var(--text); }
+.nav-tab.active       { color: var(--text); border-bottom-color: var(--accent); }
+ 
