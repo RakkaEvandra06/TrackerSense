@@ -1,0 +1,161 @@
+/* ── Cards ──────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+ 
+.card-head {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface2);
+}
+ 
+.card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+ 
+.card-head-meta {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+ 
+.cursor-info {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text-dim);
+}
+ 
+/* ── Live Dot ───────────────────────────────────────────────── */
+.live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  animation: blink-dot 2s ease-in-out infinite;
+}
+@keyframes blink-dot {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.3; }
+}
+ 
+/* Color variants */
+.live-dot--purple { background: #a78bfa; }
+.live-dot--warn   { background: var(--warn); }
+.live-dot--accent { background: var(--accent); }
+.live-dot--ai     { background: var(--ai); }
+.live-dot--human  { background: var(--human); }
+ 
+/* ── Pills ──────────────────────────────────────────────────── */
+.pill {
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  border: 1px solid;
+}
+.pill-blue  { border-color: var(--accent); color: var(--accent); background: var(--accent-dim); }
+.pill-red   { border-color: var(--ai);     color: var(--ai);     background: var(--ai-dim); }
+.pill-green { border-color: var(--human);  color: var(--human);  background: var(--human-dim); }
+.pill-warn  { border-color: var(--warn);   color: var(--warn);   background: var(--warn-dim); }
+ 
+/* ── Buttons ─────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s;
+}
+ 
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover  { background: var(--accent2); box-shadow: 0 0 16px var(--accent-glow); transform: translateY(-1px); }
+.btn-primary:active { transform: none; }
+ 
+.btn-ghost { background: var(--surface3); border: 1px solid var(--border2); color: var(--text-muted); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--text); }
+ 
+.btn-danger { background: var(--ai-dim); border: 1px solid var(--ai); color: var(--ai); }
+.btn-danger:hover { background: rgba(255, 71, 87, 0.15); }
+ 
+/* ── File Label ─────────────────────────────────────────────── */
+.file-lbl {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  background: var(--surface3);
+  border: 1px solid var(--border2);
+  color: var(--text-muted);
+  font-family: var(--sans);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.file-lbl:hover    { border-color: var(--accent); color: var(--text); }
+.file-lbl input    { display: none; }
+ 
+/* ── File Upload Error ──────────────────────────────────────── */
+.file-error {
+  margin: 8px 16px;
+  padding: 8px 12px;
+  background: rgba(255, 71, 87, 0.12);
+  border: 1px solid rgba(255, 71, 87, 0.4);
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ai);
+}
+ 
+/* ── Input Field ────────────────────────────────────────────── */
+.input-field {
+  flex: 1;
+  padding: 9px 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 11px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+.input-field:focus        { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(92, 124, 250, 0.08); }
+.input-field::placeholder { color: var(--text-dim); }
+ 
+/* ── Load Error ─────────────────────────────────────────────── */
+.load-error {
+  padding: 16px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ai);
+  background: rgba(255, 71, 87, 0.08);
+  border: 1px solid rgba(255, 71, 87, 0.3);
+  border-radius: 8px;
+  margin: 12px;
+}
+ 
