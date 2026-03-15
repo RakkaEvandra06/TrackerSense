@@ -1,0 +1,148 @@
+/* ── GitHub Panel ───────────────────────────────────────────── */
+.gh-body { padding: 16px; }
+.gh-desc { font-family: var(--mono); font-size: 11px; color: var(--text-muted); line-height: 1.7; margin-bottom: 14px; }
+.gh-row  { display: flex; gap: 8px; margin-bottom: 10px; }
+ 
+.gh-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  border-top: 1px solid var(--border);
+  min-height: 160px;
+}
+ 
+/* ── Progress Track ─────────────────────────────────────────── */
+.progress-track {
+  width: 300px;
+  height: 8px;
+  background: #222;
+  border-radius: 6px;
+  overflow: hidden;
+}
+ 
+.progress-fill {
+  height: 8px;
+  background: var(--accent);
+  width: 0%;
+  transition: width 0.25s;
+}
+ 
+/* ── Repo Card ──────────────────────────────────────────────── */
+.repo-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 14px; }
+.repo-name { font-size: 13px; font-weight: 800; color: var(--accent); margin-bottom: 6px; }
+.repo-meta { display: flex; gap: 12px; font-family: var(--mono); font-size: 10px; color: var(--text-muted); margin-bottom: 12px; }
+ 
+/* ── File List ──────────────────────────────────────────────── */
+.file-list { display: flex; flex-direction: column; gap: 4px; }
+ 
+.file-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 9px;
+  border-radius: 7px;
+  background: var(--surface3);
+  font-family: var(--mono);
+  font-size: 10px;
+}
+.file-name     { flex: 1; color: var(--text-muted); }
+.file-bar-wrap { width: 80px; height: 3px; background: var(--surface2); border-radius: 2px; }
+.file-bar      { height: 100%; border-radius: 2px; }
+.file-pct      { width: 28px; text-align: right; font-size: 10px; }
+ 
+.file-badge {
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.fb-ai    { background: var(--ai-dim);    color: var(--ai);    border: 1px solid rgba(255, 71, 87, 0.25); }
+.fb-human { background: var(--human-dim); color: var(--human); border: 1px solid rgba(46, 213, 115, 0.25); }
+.fb-mixed { background: var(--warn-dim);  color: var(--warn);  border: 1px solid rgba(255, 165, 2, 0.25); }
+ 
+/* ── Demo Buttons ───────────────────────────────────────────── */
+.demo-btns { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+ 
+/* ── Models Grid ────────────────────────────────────────────── */
+.model-grid-wrap { padding: 14px 16px; }
+.model-grid      { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+ 
+.model-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.model-card:hover  { border-color: var(--accent); }
+.model-card.active { border-color: var(--accent); background: var(--accent-dim); }
+ 
+.model-hd { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 700; margin-bottom: 3px; }
+.model-hd .check { color: var(--human); display: none; font-size: 10px; }
+.model-card.active .model-hd .check { display: inline; }
+ 
+.model-desc     { font-family: var(--mono); font-size: 9px; color: var(--text-muted); margin-bottom: 8px; }
+.model-acc-bar  { height: 2px; background: var(--surface3); border-radius: 2px; }
+.model-acc-fill { height: 100%; background: var(--human); border-radius: 2px; }
+.model-acc-val  { color: var(--human); }
+.model-acc-label { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 8px; color: var(--text-dim); margin-top: 3px; }
+ 
+.model-note {
+  padding: 12px 0 4px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+.model-note strong { color: var(--accent); }
+ 
+.active-model-display {
+  padding: 24px;
+  text-align: center;
+}
+.active-model-icon { font-size: 40px; margin-bottom: 8px; }
+.active-model-name { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+.active-model-desc { font-family: var(--mono); font-size: 10px; color: var(--text-muted); }
+ 
+/* ── Dataset Panel ──────────────────────────────────────────── */
+.dataset-body { padding: 14px 16px; }
+ 
+.ex-tabs { display: flex; gap: 4px; margin-bottom: 12px; }
+ 
+.ex-tab {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  cursor: pointer;
+  border: 1px solid var(--border2);
+  background: none;
+  color: var(--text-muted);
+  transition: all 0.15s;
+}
+.ex-tab.ai-active    { background: var(--ai-dim);    border-color: var(--ai);    color: var(--ai); }
+.ex-tab.human-active { background: var(--human-dim); border-color: var(--human); color: var(--human); }
+.ex-tab:not(.ai-active):not(.human-active):hover { color: var(--text); }
+ 
+.ex-list { display: flex; flex-direction: column; gap: 6px; }
+ 
+.ex-item {
+  padding: 10px 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.ex-item:hover  { border-color: var(--border2); background: var(--surface3); }
+.ex-name        { font-size: 12px; font-weight: 700; margin-bottom: 2px; }
+.ex-meta        { font-family: var(--mono); font-size: 9px; color: var(--text-muted); }
+ 
+.ex-name--ai    { color: var(--ai); }
+.ex-name--human { color: var(--human); }
+ 
