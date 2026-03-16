@@ -1,0 +1,103 @@
+/* ── About Grid ─────────────────────────────────────────────── */
+.about-grid {
+  display: grid;
+  gap: 1.8rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+ 
+/* ── About Cards ────────────────────────────────────────────── */
+.about-card {
+  background-color: #1e1e1e;
+  padding: 1.6rem 2rem;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgb(255 255 255 / 0.06);
+  border: 1px solid #2c2c2c;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+.about-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgb(255 255 255 / 0.15);
+  border-color: #666;
+}
+ 
+/* ── About Headings ─────────────────────────────────────────── */
+.about-h {
+  font-weight: 700;
+  font-size: 1.35rem;
+  margin-bottom: 0.7rem;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  user-select: none;
+  color: var(--text);
+}
+ 
+/* Color variants */
+.about-h--warn   { color: var(--warn); }
+.about-h--ai     { color: var(--ai); }
+.about-h--human  { color: var(--human); }
+.about-h--accent { color: var(--accent); }
+.about-h--purple { color: #a78bfa; }
+ 
+/* ── About Body Text ────────────────────────────────────────── */
+.about-p {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #ccc;
+  margin: 0;
+  user-select: text;
+  text-align: justify;
+}
+ 
+/* Responsive */
+@media (max-width: 400px) {
+  .about-h { font-size: 1.1rem; }
+  .about-p { font-size: 0.9rem; }
+}
+ 
+/* ── Site Footer ────────────────────────────────────────────── */
+.site-footer {
+  font-family: var(--mono);
+  background: #0f1115;
+  color: #9aa4b2;
+  padding: 50px 20px 20px;
+  text-align: justify;
+}
+ 
+.footer-container {
+  font-family: var(--mono);
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+}
+ 
+.footer-logo  { color: white; font-size: 20px; }
+.footer-title { color: white; margin-bottom: 10px; }
+ 
+.footer-nav ul,
+.footer-resources ul {
+  list-style: none;
+  padding: 0;
+}
+ 
+.footer-nav a,
+.footer-resources a {
+  color: #9aa4b2;
+  text-decoration: none;
+}
+.footer-nav a:hover,
+.footer-resources a:hover { color: white; }
+ 
+.footer-bottom {
+  font-family: var(--mono);
+  text-align: center;
+  margin-top: 40px;
+  font-size: 14px;
+  border-top: 1px solid #222;
+  padding-top: 15px;
+}
+ 
