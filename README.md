@@ -29,26 +29,34 @@
 ```bash                            
 │
 ├── components/             
-│   ├── header.html
-│   ├── editor.html
-│   ├── github.html
-│   ├── models.html
-│   ├── dataset.html
 │   ├── about.html
-│   └── footer.html
+│   ├── dataset.html
+│   ├── editor.html
+│   ├── footer.html
+│   ├── github.html
+│   ├── header.html
+│   └── models.html
 │
 ├── css/             
-│   ├── styles.css
+│   ├── about.css
+│   ├── analysis.css
+│   ├── base.css
+│   ├── components.css
+│   ├── editor.css
+│   ├── header.css
+│   ├── layout.css
+│   ├── main.css
+│   ├── pages.css
 │
 ├── js/                     
-│    ├── patterns.js
 │    ├── analysis.js
-│    ├── render.js
+│    ├── app.js
 │    ├── editor.js
 │    ├── examples.js
 │    ├── github.js
-│    ├── app.js
-│    └── loader.js
+│    ├── loader.js
+│    ├── patterns.js
+│    └── render.js
 │
 ├── index.html   
 └── README.md    
@@ -118,4 +126,9 @@ Clear simulation labels, ML model UI is labeled SIMULATED honestly
 
 ---
 
-<p align="center"> Made with ❤️ by the VibeDetect Team </p>
+<div align="center">
+  <p>Made with ❤️</p>
+  <p>
+    <strong>Vibe Detect</strong> Team
+  </p>
+</div>
